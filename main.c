@@ -46,7 +46,6 @@ int getIntegerInput(void) {
     return input;
 }
 
-
 //card processing functions ---------------
 
 //calculate the actual card number in the blackjack game
@@ -93,50 +92,143 @@ int getCardNum(int cardnum, int i){
 	return input;
 }
 
-
-
-int main(int argc, char *argv[]) {
-	//initialize roundIndex, action, count
-	//declare argument
-	int roundIndex = 1;
-	int max_user;
-	int i,j;
-	int count=2;
-	int action=0;
-	
-	srand((unsigned)time(NULL));
-	
-	//set the number of players
-	max_user=configUser();
-
-	//Game initialization --------
-	//1. players' dollar
-	for(i=0;i<max_user;i++){
-		dollar[i] = N_DOLLAR;
-	}
-	//2. card tray
-	mixCardTray();
-
-
-
-	//Game start --------
-	do {
+//print the card information (e.g. DiaA)
+//set A,J,Q,K on each card(Hart,Club,Spade,Dia) and then set number of remaining cards(cardnum+1)
+void printCard(int cardnum) {	
+		switch(cardnum){
+			case 0:
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+			case 7: 
+			case 8:
+			case 9:
+			case 10:
+			case 11:
+			case 12:  
+			if (cardnum==0)
+				printf("Hart A ");
+			else if (cardnum==10)
+				printf("Hart J ");
+			else if (cardnum==11)
+				printf("Hart Q ");
+			else if (cardnum==12)
+				printf("Hart K ");
+			else
+				printf("Hart %d ", cardnum+1);
+				
+			break;
+			
+			case 13:
+			case 14:
+			case 15:
+			case 16:
+			case 17:
+			case 18:
+			case 19:
+			case 20:
+			case 21:
+			case 22:
+			case 23:
+			case 24:
+			case 25:
 		
-		printf("\n-------------------------------------\n");
-		printf("--------ROUND %d ( cardIndex : %d)---------",roundIndex, cardIndex);
-		printf("\n-------------------------------------\n");
+			if (cardnum==13)
+				printf("Club A ");
+			else if (cardnum==23)
+				printf("Club J ");
+			else if (cardnum==24)
+				printf("Club Q ");
+			else if (cardnum==25)
+				printf("Club K ");				
+			else
+				printf("Club %d ", (cardnum%12));
 		
-		betDollar(); //beting dollars out of last money
-		offerCards(); //1. give cards to all the players
+			break;
+					
+			case 26:
+			case 27:
+			case 28:
+			case 29:
+			case 30:
+			case 31:
+			case 32:
+			case 33:
+			case 34:
+			case 35:
+			case 36:
+			case 37:	
+			case 38:
 		
-		printf("\n----------CARD OFFERING----------\n");
-		printCardInitialStatus();// print initial status of card(each players')
-		printf("\n------------------ GAME start --------------------------\n");		
-		//each player's turn
+			if (cardnum==26)
+				printf("Spade A ");
+			else if (cardnum==36)
+				printf("Spade J ");
+			else if (cardnum==37)
+				printf("Spade Q ");
+			else if (cardnum==38)
+				printf("Spade K ");
+			else
+				printf("Spade %d ", (cardnum%25));
+			
+			break;
+			
 		
-	
-	return 0;
-
+			case 39:
+			case 40:
+			case 41:
+			case 42:
+			case 43:
+			case 44:
+			case 45:
+			case 46:
+			case 47:
+			case 48:
+			case 49:
+			case 50:
+			case 51:	
+			
+			if (cardnum==39)
+				printf("Dia A ");
+			else if (cardnum==49)
+				printf("Dia J ");
+			else if (cardnum==50)
+				printf("Dia Q ");
+			else if (cardnum==51)
+				printf("Dia K ");
+			else
+				printf("Dia %d ", (cardnum%38));
+			
+			break;
+		}
+		
 }
 
+
+//card array controllers -------------------------------
+void mixCardTray(void) {
+	
+	int i, j;
+	int temp;
+	
+	for(i=0; i<N_CARDSET*N_CARD; i++){
+		
+		CardTray[i]=i;
+		cardSum[i]=0;
+		
+	}
+	
+	for(j=0; j<N_CARDSET*N_CARD; j++){
+		
+		int k = rand()%(N_CARDSET*N_CARD);
+		temp = CardTray[j]; 
+		CardTray[j] = CardTray[k];
+		CardTray[k] = temp;
+	}
+}
+
+//get one card from the tray
 
