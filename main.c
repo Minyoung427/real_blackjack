@@ -609,5 +609,26 @@ int main(int argc, char *argv[]) {
 			}
 		
 		}
+		printf("\n--------------------------------ROUND%d result------------------------------\n", roundIndex);
+		checkResult(count);
+		
+		for(i=0;i<n_user;i++){
+			if(dollar[i]==0)
+			gameEnd = 1;
+			
+			else if(cardIndex==52)
+			gameEnd = 1;
+		}
+		
+		roundIndex++;
+	} while (gameEnd == 0);
+	
+	checkWinner();
+	
+	
+	return 0;
+
+}
+
 
 
