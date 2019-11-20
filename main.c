@@ -254,3 +254,101 @@ int configUser(void) {
 	return n_user;
 }
 
+//betting
+void betDollar(void) {
+	int i;
+	
+	printf("\n----------BETTING STEP----------\n");
+	printf("->Your betting(total:%d) ",dollar[0]);
+	getIntegerInput();
+	//get bet
+	dollar[0]-=bet[0];
+	//when I bet a certain price, subtract from first original capital.
+	
+	for(i=1;i<n_user;i++){
+		bet[i]=1+rand()%5;
+		printf("player%d bets %d(out of $%d)\n",i,bet[i],dollar[i]);
+		dollar[i]-=bet[i];
+		//In the case of plaeyrs assign betting dollar randomly(1~5)
+		//and then subtract from first original capital.
+	}
+	
+}
+
+
+//offering initial 2 cards
+void offerCards(void) {
+	int i;
+	//1. give two card for each players
+	for (i=0;i<n_user;i++)
+	{
+		cardhold[i][0] = pullCard();
+		cardhold[i][1] = pullCard();
+	}
+	//2. give two card for the operator
+	cardhold[n_user][0] = pullCard();
+	cardhold[n_user][1] = pullCard();
+	
+	return;
+}
+
+//print initial card status
+void printCardInitialStatus(void) {
+
+	int i;
+	
+	for(i=0;i<=n_user;i++){
+	//after offerCards, print initial card status
+		if(i==0){
+		printf("Your card: ");
+		printCard(cardhold[i][0]);
+		printCard(cardhold[i][1]);
+		}
+		
+	//dealer do not open his first card, so print 'x'
+		else if(i==n_user){
+		printf("\ndealer's card: %c ",'X');
+		printCard(cardhold[n_user][1]);
+		}
+		
+
+		else if(i<n_user){
+		printf("\nplayer %d card: ",i);
+		printCard(cardhold[i][0]);
+		printCard(cardhold[i][1]);
+		}
+		
+		
+	}
+
+	return;
+}
+
+
+int getAction(int i) {
+	int action;
+	//when player's cardSum is smaller than 17, print GO! And enter 0 into action
+	if(cardSum[i]<17){
+		printf("	:::GO!\n");
+		action=0;
+	}
+	//when player's cardSum is 17 or bigger than 17, print STAY! And enter 1 into action
+	else if(cardSum[i]>=17){
+		printf("	:::STAY!");
+		action=1;
+	}
+
+	return action;	
+		}
+	
+
+
+//When pull new card, print player's card status
+void printUserCardStatus(int user, int cardcnt) {
+	int i;
+
+	printf("   -> card : ");
+	for (i=0;i<cardcnt;i++)
+		printCard(cardhold[user][i]);
+	printf("\t ::: ");
+}
