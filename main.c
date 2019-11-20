@@ -476,5 +476,138 @@ int main(int argc, char *argv[]) {
 	//2. card tray
 	mixCardTray();
 
+	//Game start --------
+	do {
+		
+		printf("\n-------------------------------------\n");
+		printf("--------ROUND %d ( cardIndex : %d)---------",roundIndex, cardIndex);
+		printf("\n-------------------------------------\n");
+		
+		betDollar(); //beting dollars out of last money
+		offerCards(); //1. give cards to all the players
+		
+		printf("\n----------CARD OFFERING----------\n");
+		printCardInitialStatus();// print initial status of card(each players')
+		printf("\n------------------ GAME start --------------------------\n");		
+		//each player's turn
+		for (i=0;i<=n_user;i++) //each player
+		{	
+			//initialize cardSum for next round
+			cardSum[i]=0;
+		
+			//initialize count=2			
+			count=2;
+			action = 0;
+			
+			//start my turn
+			if(i==0){
+				printf("->my turn!----------\n");
+				//first start unconditionally, because action be initialized 0
+				while(action==0){
+					printUserCardStatus(i, count);
+				//Sum numbers(card1,2)
+					for(j=0;j<count;j++){
+						cardSum[i]+=getCardNum(cardhold[i][j],i);
+						}
+				//ask action or not and get enter
+					printf("\n	:::Action?(0-go, other integer-stop)");
+					action = getIntegerInput();
+				//if I select 'GO' hold a card and sum card number
+					if(action==0){
+						cardhold[0][count] = pullCard();
+						cardSum[i]+=getCardNum(cardhold[0][count],i);
+						calcStepResult(i, count);
+						count++;
+				//if cardSum is bigger than 21, break this loop
+						if(cardSum[i]>=21)
+							break;
+											
+						}
+						
+					}
+				}
+			//start players' turn	
+
+			else if(i<n_user){
+				//initialize action = 0 and count = 2
+				action=0;
+				count=2;
+				//start first process 
+				printf("\n\n->player %d turn!----------\n",i);
+				printUserCardStatus(i, count);
+				//Sum numbers(card1,2)
+				for(j=0;j<count;j++){
+					cardSum[i]+=getCardNum(cardhold[i][j],i);
+					}
+				action=getAction(i);
+				while(action==0){	
+							//when player's state is 'GO' pull a card
+							cardhold[i][count]=pullCard();
+							cardSum[i]+=getCardNum(cardhold[i][count],i);
+							count++;
+							//print next card status
+							printUserCardStatus(i, count);
+							calcStepResult(i,count);
+							//if sum of cards is 21 or bigger than 21, break this loop
+							//another case, call getAction again
+							if(cardSum[i]>=21)
+							break;
+							else
+							action=getAction(i);	
+							//When dead, minus dollar(bet dollar)
+							if(cardSum[i]>21)
+								printf("-->-$%d ($%d)",bet[i],(dollar[i]-bet[i]));
+					}
+							//When player's state is 'STAY' 
+							if(action==1){
+								calcStepResult(i,count);
+							
+							}
+				}
+			
+			//start dealer's turn
+			else if(i=n_user){
+				//initialize action = 0 and count = 2
+				action=0;
+				count=2;
+				//start first process 
+				printf("\n\n->server turn!----------\n");			
+				printUserCardStatus(i, count);
+				//Sum numbers(card1,2)
+				for(j=0;j<count;j++){
+				cardSum[i]+=getCardNum(cardhold[i][j],i);
+					}
+				action=getAction(i);
+				while(action==0){
+							//when dealer's state is 'GO' pull a card	
+							cardhold[i][count]=pullCard();
+							cardSum[i]+=getCardNum(cardhold[i][count],i);
+							count++;
+							//print next card status
+							printUserCardStatus(i, count);
+							calcStepResult(i,count);
+							//if sum of cards is 21 or bigger than 21, break this loop
+							//another case, call getAction again
+							if(cardSum[i]>=21)
+							break;
+							else
+							action=getAction(i);
+							//When dead, minus dollar(bet dollar)				
+							}
+							//When dealer's state is 'STAY' 				
+							if(action==1){
+								calcStepResult(i,count);
+							
+							}
+				//print dealer's result
+				if(cardSum[i]<21){
+					printf("\n[[[[[[ server result is ...%d ]]]]]]\n",cardSum[i]);
+				}
+				else if(cardSum[i]>21){
+					printf("\n[[[[[[ server result is ... overflow!! ]]]]]]\n");
+				}
+			}
+		
+		}
 
 
