@@ -231,4 +231,26 @@ void mixCardTray(void) {
 }
 
 //get one card from the tray
+int pullCard(void) {
+	int p_card;
+
+	p_card=CardTray[cardIndex];
+	
+	cardIndex++;
+	
+	return p_card;
+}
+
+
+//playing game functions -----------------------------
+
+//player settiing
+int configUser(void) {
+	do{
+		printf("input the number of player(MAX:5)");
+		n_user=getIntegerInput(); 
+	}while(n_user>N_MAX_USER);
+	//when n_user is bigger than 5, action again
+	return n_user;
+}
 
