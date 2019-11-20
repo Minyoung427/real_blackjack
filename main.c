@@ -428,3 +428,53 @@ void checkResult(int count){
 }
 //print final winner according to capital remaining
 //By compare all of players' capital
+
+void checkWinner(void) {
+	//int dollar[n_user];
+	int max, i;
+	int winner;
+	
+	max=dollar[0];
+	winner = 0;
+	for(i=0;i<n_user;i++)
+	{
+		if(dollar[i]>max)
+		{
+			max=dollar[i];
+			winner=i;
+		}
+	}
+		
+	if(winner==0)
+		printf("\n\n		OH YEAH!!!!HAHAHA Final winner is you");
+	else
+		printf("\n\n		Final winner is %d", winner);	
+		
+}
+
+
+
+int main(int argc, char *argv[]) {
+	//initialize roundIndex, action, count
+	//declare argument
+	int roundIndex = 1;
+	int max_user;
+	int i,j;
+	int count=2;
+	int action=0;
+	
+	srand((unsigned)time(NULL));
+	
+	//set the number of players
+	max_user=configUser();
+
+	//Game initialization --------
+	//1. players' dollar
+	for(i=0;i<max_user;i++){
+		dollar[i] = N_DOLLAR;
+	}
+	//2. card tray
+	mixCardTray();
+
+
+
