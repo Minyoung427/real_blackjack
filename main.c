@@ -352,3 +352,79 @@ void printUserCardStatus(int user, int cardcnt) {
 		printCard(cardhold[user][i]);
 	printf("\t ::: ");
 }
+
+
+
+
+
+// calculate the card sum and see if : 1. under 21, 2. over 21, 3. blackjack
+void calcStepResult(int user, int cnt) {	
+	//when cardsum is 21 and pull count is 2, it prints Black Jack
+	if(cardSum[user]==21&&cnt==2){
+		printf("	:::Black Jack!congratulation, you win!!");
+		cardSum[user] = 0;
+	}
+	//when cardsum is bigger than 21, it prints 'DEAD' and sum of card numbers
+	//print remaining capital and subtract value
+	else if(cardSum[user]>21){
+		printf("	:::DEAD(sum: %d)", cardSum[user]);
+		printf("-->-$%d ($%d)",bet[user],dollar[user]);
+	}	
+	//when cardsum is 21, just print :::
+	else if(cardSum[user]==21){
+		printf("	:::");
+	}
+	//when cardsum is smaller than 21, just print :::
+	else if(cardSum[user]<21){
+		printf("	:::");
+	}
+
+	}
+	
+//print a round's result
+void checkResult(int count){
+	int i;
+	//print result(lose, blackjackm win) and perform the batting results
+	for(i=0;i<n_user;i++){
+		if(i==0){
+			printf("\n	->your result: ");
+				if((cardSum[i]==21)&&(count==2)){
+					dollar[i]+=(2*bet[i]);
+					printf("Black Jack! win ($%d)",dollar[i]);
+				}
+				else if((cardSum[i]>=cardSum[n_user])&&(cardSum[i]<=21)){
+					dollar[i]+=bet[i];
+					printf("win(sum:%d) --> $%d\n", cardSum[0],dollar[i]);
+					}
+				else if(cardSum[i]<cardSum[n_user]){
+					printf("lose! (sum:%d) --> $%d",cardSum[0],dollar[i]);
+				}
+				else if(cardSum[i]>21){
+					printf("lose due to overflow ($%d) - sum:%i",dollar[i], cardSum[i]);
+				}
+				
+			}
+		else{
+			printf("\n	->%d'th player's result: ",i);
+				if((cardSum[i]==21)&&(count==2)){
+					dollar[i]+=(2*bet[i]);
+					printf("Black Jack! win ($%d)",dollar[i]);
+				}
+				else if((cardSum[i]>cardSum[n_user])&&(cardSum[i]<21)){
+					dollar[i]+=bet[i];
+					printf("win(sum:%d) --> $%d", cardSum[i],dollar[i]);
+				}
+				else if(cardSum[i]<cardSum[n_user]){
+					printf("lose! (sum:%d) --> $%d",cardSum[i],dollar[i]);
+				}
+				else if(cardSum[i]>21){
+					printf("lose due to overflow ($%d)",dollar[i]);
+				}
+			
+				
+		}
+
+	}
+}
+//print final winner according to capital remaining
+//By compare all of players' capital
