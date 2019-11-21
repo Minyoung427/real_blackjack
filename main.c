@@ -137,7 +137,7 @@ int main(int argc, char *argv[]) {
                  }
             //if card is 'A' and cardsum is 11, it is blackjack!
 			if(hands_up==1&&cardSum[i]==11){
-               	cardSum[i]=0;
+               	cardSum[i]=-1;
                	//judge dead or not
 				calcStepResult(i,count);
                 //if blackjack, finish myturn by set action=1
@@ -259,7 +259,7 @@ int main(int argc, char *argv[]) {
                   }
                 //if card is 'A' and cardsum is 11, it is blackjack! 
                 if(hands_up==1&&cardSum[i]==11){
-                	cardSum[i]=0;
+                	cardSum[i]=-1;
                 	calcStepResult(i,count);
                 	action=1;
 				}

@@ -151,7 +151,7 @@ void printUserCardStatus(int user, int cardcnt) {
 // calculate the card sum and see if : 1. under 21, 2. over 21, 3. blackjack
 void calcStepResult(int user, int cnt) {   
    //when cardsum is 21 and pull count is 2, it prints Black Jack
-   if(cardSum[user]==0){
+   if(cardSum[user]==-1){
       printf("   :::Black Jack!congratulation, you win!!");
    }
    //when cardsum is bigger than 21, it prints 'DEAD' and sum of card numbers
@@ -171,7 +171,7 @@ void checkResult(int count){
       if(i==0){
          printf("\n   ->your result: ");
             //when blackjack win
-			if(cardSum[i]==0){
+			if(cardSum[i]==-1){
             	dollar[i]+=(2*bet[i]);
             	printf("Black Jack! win ($%d)",dollar[i]);
             }
@@ -204,7 +204,7 @@ void checkResult(int count){
       else{
          printf("\n   ->%d'th player's result: ",i);
             //when blackjack win
-			if(cardSum[i]==0){
+			if(cardSum[i]==-1){
 			 	dollar[i]+=(2*bet[i]);
                	printf("Black Jack! win ($%d)",dollar[i]);
             }
